@@ -1,11 +1,16 @@
 // Firebase configuration
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
-import { getAuth } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
-import { getFirestore, collection, addDoc, getDocs, query } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
+import { initializeFirestore } from './firestore.js';
+
+console.log('init')
+
+// Import page-specific modules
+import { initShowQuestion } from './showQuestion.js';
+import { initAddQuestion } from './addQuestion.js';
 
 const firebaseConfig = {
   apiKey: "AIzaSyB5Rx69Nptehsa4ChVQRMP9Gs9Zbapgaq4",
-  authDomain: "potterquest-2daca.firebaseapp.com",
+  authDomain: "potterquest-2daca.firebaseapp.com",  
   projectId: "potterquest-2daca",
   storageBucket: "potterquest-2daca.appspot.com",
   messagingSenderId: "342991508537",
@@ -18,94 +23,28 @@ const app = initializeApp(firebaseConfig);
 
 if (app) {
   console.log('app initiated');
+} else {
+  console.log('app not init');
 }
 
-// // Initialize Firebase Authentication and Firestore
-const auth = getAuth(app);
+// Initialize Firestore
+const db = initializeFirestore(app);
 
-// // Example Firebase Authentication usage
-auth.onAuthStateChanged((user) => {
-  if (user) {
-    console.log("User is signed in:", user.email);
-  } else {
-    console.log("No user signed in");
+// Detect which page is being loaded and call the respective module
+document.addEventListener("DOMContentLoaded", () => {
+  const page = document.body.dataset.page;
+
+  if (page === 'show-question') {
+    initShowQuestion(db);
+  } else if (page === 'add-question') {
+    console.log(initAddQuestion);
+    initAddQuestion(db);
   }
 });
 
 
 
-// Generic function to add questions to any Firestore collection
-const addQuestionsToCollection = async (dbRef, collectionName, questions) => {
-  try {
-    // Loop through each question object and add it to the specified collection
-    for (const questionObj of questions) {
-      await addDoc(collection(dbRef, collectionName), questionObj);
-    }
-    console.log(`Questions added successfully to ${collectionName} collection!`);
-  } catch (error) {
-    console.error(`Error adding questions to ${collectionName} collection: `, error);
-  }
-};
 
-
-const quizQuestions = [
-  {
-    question: "What is the name of the first chapter in *Harry Potter and the Philosopher's Stone*?",
-    choices: [
-      "The Boy Who Lived",
-      "The Vanishing Glass",
-      "The Keeper of the Keys",
-      "The Forbidden Forest"
-    ],
-    correctAnswer: "The Boy Who Lived"
-  },
-  {
-    question: "What kind of creature is Hagrid’s pet, Norbert?",
-    choices: [
-      "A unicorn",
-      "A centaur",
-      "A dragon",
-      "A hippogriff"
-    ],
-    correctAnswer: "A dragon"
-  },
-  {
-    question: "Which house does Harry Potter get sorted into at Hogwarts?",
-    choices: [
-      "Hufflepuff",
-      "Ravenclaw",
-      "Slytherin",
-      "Gryffindor"
-    ],
-    correctAnswer: "Gryffindor"
-  },
-  {
-    question: "What is the name of the three-headed dog that guards the trapdoor leading to the Philosopher's Stone?",
-    choices: [
-      "Fang",
-      "Fluffy",
-      "Fawkes",
-      "Buckbeak"
-    ],
-    correctAnswer: "Fluffy"
-  },
-  {
-    question: "Which broomstick does Harry receive for his first year at Hogwarts?",
-    choices: [
-      "Nimbus 2000",
-      "Firebolt",
-      "Cleansweep Seven",
-      "Comet Two-Sixty"
-    ],
-    correctAnswer: "Nimbus 2000"
-  }
-];
-
-
-
-const db = getFirestore(app);
-
-// addQuestionsToCollection(db, 'questions', quizQuestions);
 
 
 // Select elements
