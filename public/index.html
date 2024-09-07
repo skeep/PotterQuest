@@ -17,11 +17,13 @@
     <script type="module" src="/js/main.js"></script>
   </head>
   <body>
-    <div id="message">
-      <h2>Welcome to PotterQuest</h2>
-      <h1>Your Quiz Journey Awaits!</h1>
-      <p>Start exploring the magical world of PotterQuest by taking on quizzes and challenges.</p>
+    <div id="quiz-container">
+      <h1>PotterQuest Quiz</h1>
+      <div id="question-container"></div>
+      <div id="choices-container"></div>
+      <button id="submit-answer" disabled>Submit Answer</button>
+      <button id="next-question" disabled>Next Question</button>
+      <p id="result"></p>
     </div>
-    <p id="load">Firebase SDK Loading&hellip;</p>
   </body>
 </html>
