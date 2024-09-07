@@ -18,12 +18,12 @@ app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 
 // Route: Add Question Page
-app.get('/add-question', (req, res) => {
+app.get('/add', (req, res) => {
   res.render('add-question', { title: 'Add New Questions' });
 });
 
 // Route: Show Questions Page
-app.get('/show-question', (req, res) => {
+app.get('/q', (req, res) => {
   res.render('show-question', { title: 'Show Question' });
 });
 
