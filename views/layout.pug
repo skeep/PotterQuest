@@ -13,5 +13,6 @@ html(lang="en")
         .column.column-60.column-offset-20
           h1.text-center PotterQuest Quiz
           block content  // Each page will insert its unique content here
-    script(type="module" src="/js/main.js", defer)      
+
     block additional-scripts
+      script(src="/js/bundle.js", defer)  // Load the Webpack bundle

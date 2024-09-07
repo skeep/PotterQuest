@@ -1,9 +1,7 @@
 // Firebase configuration
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+// import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+import { initializeApp } from "firebase/app";
 import { initializeFirestore } from './firestore.js';
-
-console.log('init')
-
 // Import page-specific modules
 import { initShowQuestion } from './showQuestion.js';
 import { initAddQuestion } from './addQuestion.js';
@@ -20,13 +18,6 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-
-if (app) {
-  console.log('app initiated');
-} else {
-  console.log('app not init');
-}
-
 // Initialize Firestore
 const db = initializeFirestore(app);
 

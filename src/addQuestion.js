@@ -1,4 +1,5 @@
-import { collection, addDoc } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
+// import { collection, addDoc } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
+import { collection, addDoc } from "firebase/firestore";
 
 // Function to initialize the "Add Question" page
 export function initAddQuestion(db) {

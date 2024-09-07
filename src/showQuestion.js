@@ -1,4 +1,6 @@
-import { getDocs, collection, query } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
+// import { getDocs, collection, query } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
+import { collection, getDocs, query } from "firebase/firestore";
+
 
 // Function to initialize the quiz display page
 export function initShowQuestion(db) {
