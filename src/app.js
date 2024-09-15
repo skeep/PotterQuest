@@ -1,9 +1,17 @@
 // src/app.js
 import express from 'express';
-import dotenv from 'dotenv';
+// import dotenv from 'dotenv';
+import path from 'path';
+
+import { fileURLToPath } from 'url';
 import { quizRoutes } from './routes.js';
 
-dotenv.config();
+
+// Manually define __dirname since it's not available in ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// dotenv.config();
 
 const app = express();
 
@@ -11,7 +19,17 @@ const app = express();
 app.use(express.json());
 
 // Serve static files from the "public" directory
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, '..', 'public')));
+
+// Serve the game page
+app.get('/game', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'public', 'game.html'));
+});
+
+// Serve the congratulations page
+app.get('/congrats', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'public', 'congrats.html'));
+});
 
 // Use routes from routes.js
 app.use('/api', quizRoutes);

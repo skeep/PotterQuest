@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harry Potter Quiz - Game</title>
+    <link rel="stylesheet" href="/styles/style.css">
+</head>
+<body>
+    <h1>Harry Potter Quiz - Game</h1>
+
+    <!-- Show the question -->
+    <div x-show="!isGameOver">
+        <h2 x-text="`Question ${currentQuestionIndex + 1}/10`"></h2>
+        <p x-text="currentQuestion.question"></p>
+        
+        <!-- List of choices -->
+        <ul>
+            <template x-for="(choice, index) in currentQuestion.choices" :key="index">
+                <li>
+                    <button 
+                        @click="selectAnswer(choice)"
+                        :class="{
+                            'selected': choice === selectedAnswer,
+                            'correct': submitted && choice === currentQuestion.correct_answer,
+                            'wrong': submitted && choice === selectedAnswer && choice !== currentQuestion.correct_answer
+                        }"
+                        :disabled="submitted">
+                        <span x-text="choice"></span>
+                    </button>
+                </li>
+            </template>
+        </ul>
+
+        <!-- Show feedback and the next question button -->
+        <div x-show="submitted">
+            <p x-text="isCorrect ? 'Correct!' : 'Wrong!'"></p>
+            <button @click="nextQuestion()">Next Question</button>
+        </div>
+
+        <!-- Submit button -->
+        <button @click="submitAnswer()" x-show="!submitted">Submit</button>
+    </div>
+
+    <!-- Score and end game summary -->
+    <div x-show="isGameOver">
+        <h2>Game Over!</h2>
+        <p>Your score is: <span x-text="score"></span>/100</p>
+        <button @click="goToCongrats()">Finish</button>
+    </div>
+
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script defer src="/scripts/game.js"></script>
+
+        <!-- Manually start Alpine.js after app.js is loaded -->
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                // Apply Alpine.js only after app.js is loaded
+                document.querySelector('body').setAttribute('x-data', 'gameApp()');
+                Alpine.start(); // Manually start Alpine.js
+            });
+        </script>
+</body>
+</html>

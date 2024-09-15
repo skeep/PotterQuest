@@ -1,32 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PotterQuest</title>
 
-    <!-- Normalize.css for browser consistency -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
-    
-    <!-- Link to external CSS -->
-    <link rel="stylesheet" href="/css/screen.css" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harry Potter Quiz - Home</title>
+    <link rel="stylesheet" href="/styles/style.css">
+</head>
 
-    <!-- Firebase SDKs (ES6 modules) -->
-    <script type="module" src="https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js"></script>
-    <script type="module" src="https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js"></script>
-    <script type="module" src="https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js"></script>
-
-    <!-- Link to external JavaScript (as a module) -->
-    <script type="module" src="/js/main.js"></script>
-  </head>
-  <body>
-    <div id="quiz-container">
-      <h1>PotterQuest Quiz</h1>
-      <div id="question-container"></div>
-      <div id="choices-container"></div>
-      <button id="submit-answer" disabled>Submit Answer</button>
-      <button id="next-question" disabled>Next Question</button>
-      <p id="result"></p>
+<body>
+    <h1>Welcome to the Harry Potter Quiz</h1>
+    <!-- Player Name Input -->
+    <div>
+        <label for="playerName">Enter your name:</label>
+        <input type="text" id="playerName" x-model="playerName" placeholder="Your name here" />
     </div>
-  </body>
+
+    <!-- List of Harry Potter Books -->
+    <h2>Choose a Book to Play</h2>
+    <ul>
+        <template x-for="book in books" :key="book.book_id">
+            <li>
+                <span x-text="book.title"></span>
+                <button @click="startGame(book.book_id)" :disabled="!isNameValid" :class="{ 'disabled': !isNameValid }">
+                    Play
+                </button>
+            </li>
+        </template>
+    </ul>
+
+    <!-- Include Alpine.js and fe-app.js -->
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script defer src="/scripts/main.js"></script>
+
+    <!-- Manually start Alpine.js after app.js is loaded -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Apply Alpine.js only after app.js is loaded
+            document.querySelector('body').setAttribute('x-data', 'mainApp()');
+            Alpine.start(); // Manually start Alpine.js
+        });
+    </script>
+</body>
+
 </html>
