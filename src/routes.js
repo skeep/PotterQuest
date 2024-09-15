@@ -1,7 +1,6 @@
 // src/routes.js
 import express from 'express';
 import { getQuestions } from '../routes/questions.js';
-import { submitAnswer } from '../routes/submitAnswer.js';
 
 
 // Create an Express router
@@ -19,17 +18,6 @@ router.get('/questions', async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: 'Error fetching questions' });
-  }
-});
-
-// Route to submit an answer for validation
-router.post('/submit', async (req, res) => {
-  const { questionId, submittedAnswer } = req.body;
-  try {
-    const result = await submitAnswer(questionId, submittedAnswer);
-    res.json(result);
-  } catch (error) {
-    res.status(500).json({ error: 'Error validating answer' });
   }
 });
 
