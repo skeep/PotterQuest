@@ -1,16 +1,21 @@
 // src/routes.js
 import express from 'express';
-import { getQuestions, submitAnswer } from './db.js';
+import { getQuestions } from '../routes/questions.js';
+import { submitAnswer } from '../routes/submitAnswer.js';
+
 
 // Create an Express router
 const router = express.Router();
 
-// Route to fetch quiz questions (randomized choices)
+// Route to fetch quiz questions
 router.get('/questions', async (req, res) => {
-  const limit = parseInt(req.query.limit, 10) || 5;  // Default to 5 if no limit is provided
+  const limit = parseInt(req.query.limit, 10) || 5;  // Default to 5 questions
+  const bookId = req.query.bookId || 'all';  // Default to 'all'
+  const chapterId = req.query.chapterId || 'all';  // Default to 'all'
+  
   try {
-    const questions = await getQuestions(limit);
-    res.json(questions);
+    const questions = await getQuestions(limit, bookId, chapterId);  // Fetch questions based on parameters
+    res.json(questions); // Send questions as JSON response
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: 'Error fetching questions' });
