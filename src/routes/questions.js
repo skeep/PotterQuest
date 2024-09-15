@@ -1,5 +1,5 @@
 // routes/questions.js
-import pool from '../src/db.js';
+import pool from '../db.js';
 import { hashAnswer } from '../utils/hashing.js';
 import { determineScore } from '../utils/score.js';
 

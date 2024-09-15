@@ -1,6 +1,6 @@
 // src/routes.js
 import express from 'express';
-import { getQuestions } from '../routes/questions.js';
+import { getQuestions } from './routes/questions.js';
 
 
 // Create an Express router
